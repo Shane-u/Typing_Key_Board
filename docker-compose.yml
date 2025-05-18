@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    depends_on:
+      - backend
+    restart: always
+    networks:
+      - typing-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "9000:8080"
+    volumes:
+      - ./data:/app/data
+    restart: always
+    networks:
+      - typing-network
+
+networks:
+  typing-network:
+    driver: bridge 
